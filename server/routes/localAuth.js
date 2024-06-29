@@ -65,7 +65,7 @@ router.post(
         data: { id: user._id, email: user.email, isAdmin: user.isAdmin },
       });
       //redirect remaining
-      res.redirect("http://localhost:3001/boardpets");
+      //res.redirect("http://localhost:3001/boardpets");
     });
   })
 );

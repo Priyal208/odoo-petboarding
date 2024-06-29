@@ -36,7 +36,7 @@ function Register() {
     margin: "auto",
   };
 
-  const [name, setName] = useState("");
+  const [fullName, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -64,10 +64,12 @@ function Register() {
   const handleRegister = async () => {
     setState('loading'); // Set button state to loading
     try {
-      const response = await axios.post("http://localhost:3000/auth/api/v1/register", { email, password });
-  
+      const response = await axios.post("http://localhost:3000/auth/api/v1/register", { fullName, phoneNumber ,email, password });
+  console.log(response);
+
       if (response.status === 200) {
-        setState('success'); // Set button state to success if registration is successful
+        setState('success'); 
+        
       } else {
         setState('error'); // Set button state to error if there's an issue with registration
       }
@@ -106,7 +108,7 @@ function Register() {
                   className="h-12 px-4 py-2 border-b-2 border-blue-800 text-lg bg-white shadow-md"
                   type="text"
                   placeholder="Full Name"
-                  value={name}
+                  value={fullName}
                   onChange={(e) => {
                     setError("");
                     setName(e.target.value);
@@ -216,7 +218,7 @@ function Register() {
                   loadingText="Wait..."
                   successText="Logged In"
                   errorText="Error"
-                  onClick={handleLogin} // Call handleLogin function on button click for login
+                  onClick={handleLogin} 
                 />
                 {error && (
                   <p className="absolute top-[-20px] w-full text-center text-red-500 font-semibold">
