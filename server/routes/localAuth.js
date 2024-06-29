@@ -28,7 +28,7 @@ router.post(
 
     const { error } = schema.validate(req.body);
     if (error)
-      return res.json({
+      return res.status(400).json({
         status: 400,
         success: false,
         message: error.details[0].message,
@@ -38,7 +38,7 @@ router.post(
 
     const userRepeated = await User.findOne({ email });
     if (userRepeated)
-      return res.json({
+      return res.status(400).json({
         success: false,
         status: 400,
         message: "User with the given email already exists",
@@ -68,7 +68,7 @@ router.post(
 router.post("/login", passport.authenticate("local"), (req, res) => {
   const { _id, email, isAdmin } = req.user;
 
-  return res.json({
+  return res.status(200).json({
     success: true,
     status: 200,
     message: "Logged in successfully",
