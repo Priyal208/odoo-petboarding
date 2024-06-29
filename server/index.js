@@ -17,7 +17,7 @@ app.use(
     saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl:
-        "mongodb+srv://meghprajapati009:oX0f9712dx53aDhc@cluster0.jq910sn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        "mongodb+srv://meghprajapati009:hello123@cluster0.jq910sn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     }),
     cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
     rolling: true, //redefining cookie age
@@ -33,7 +33,7 @@ app.use(error);
 
 mongoose
   .connect(
-    "'mongodb+srv://meghprajapati009:oX0f9712dx53aDhc@cluster0.jq910sn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0' "
+    "mongodb+srv://meghprajapati009:hello123@cluster0.jq910sn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
   )
   .then(() => {
     console.log("MongoDB connected successfully");
