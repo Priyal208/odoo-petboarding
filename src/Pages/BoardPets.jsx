@@ -2,7 +2,9 @@ import React from 'react'
 
 const BoardPets = () => {
   return (
-    <div>BoardPets</div>
+    <div>
+        BoardPets
+    </div>
   )
 }
 
