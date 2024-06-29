@@ -5,8 +5,7 @@ import ReactiveButton from "reactive-button";
 import custBackgroundImage from "../assets/imgs/pngtree-blue-pastel-background-picture-image_1599663.jpg";
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import i1 from '../assets/imgs/white-dog-pastel-blue-background-3d_89917-269.jpg';
-import { login, registration } from "../../utils/Functions/userAuthService";
-import LoginTextLink from "../../Components/shared/LoginTextLink";
+import LoginTextLink from "../Components/LoginTextLink";
 
 function CustomBackground({ image }) {
   return (
@@ -17,7 +16,7 @@ function CustomBackground({ image }) {
   );
 }
 
-function LoginRegisterForm() {
+function Register() {
   const location = useLocation();
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [userTypingPassword, setUserTypingPassword] = useState(false);
@@ -157,16 +156,7 @@ function LoginRegisterForm() {
                     errorText="Error"
                     messageDuration={3000}
                     disabled={!(isMinLength && hasUpperCase && hasLowerCase && hasNumber && hasSymbol)}
-                    onClick={async () =>
-                      registration(
-                        name,
-                        phone_number,
-                        email,
-                        password,
-                        setError,
-                        setButtonState
-                      )
-                    }
+                    
                   />
                   {error && (
                     <p className="absolute top-[-20px] w-full text-center text-red-500 font-semibold">
@@ -194,9 +184,7 @@ function LoginRegisterForm() {
                   loadingText="Wait..."
                   successText="Logged In"
                   errorText="Error"
-                  onClick={async () =>
-                    login(email, password, setError, setButtonState)
-                  }
+                 
                 />
                 {error && (
                   <p className="absolute top-[-20px] w-full text-center text-red-500 font-semibold">
@@ -217,4 +205,4 @@ function LoginRegisterForm() {
   
 }
 
-export default LoginRegisterForm;
+export default Register;
