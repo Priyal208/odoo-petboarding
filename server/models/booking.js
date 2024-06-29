@@ -3,8 +3,8 @@ require("./user.js");
 require("./pets.js");
 
 const bookingSchema = new mongoose.Schema({
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
+    ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    petId: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
     facility: String,
     startDate: Date,
     endDate: Date,
