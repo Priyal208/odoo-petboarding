@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Facility = require("../models/facility.js");
 const asyncMiddleware = require("../utils/asyncMiddleware.js");
+const Booking = require('../models/booking.js')
 
 router.post(
   "/facility",
@@ -18,10 +19,10 @@ router.post(
   })
 );
 
-router.get(
+router.post(
   "/availableFacility",
   asyncMiddleware(async (req, res, next) => {
-    const { facilityId } = req.body;
+    const facilityId  = '667ff1108ed612f85ebeeea0';
 
     // Find the facility by ID
     const facility = await Facility.findById(facilityId);
