@@ -30,13 +30,13 @@ const Home = () => {
                         src={PawImg}
                         alt="Paws"
                     />
-                    <p className="text-[24px] drop-shadow-3xl w-full px-4 text-center font-semibold tracking-wider h-md:hidden">Pause to save Paws</p>
+                    <p className="text-[24px] drop-shadow-3xl w-full px-4 text-center font-semibold tracking-wider h-md:hidden">Pause to stay Paws</p>
                 <div className="text-[18px] text-center max-width-[95%] pt-3 font-baijam drop- tracking-wider">
                     <p>
-                        "Save lives - Click below to report 
+                        "Welcome aboard
                     </p>
                     <p>
-                        injured animals to authorities."
+                        Pets are precious"
                     </p>
                 </div>
                 {/* BUTTON */}
