@@ -24,7 +24,7 @@ const Services = () => {
                         <LuBath  className='about-us-icon' fontSize={27}/>
                         <div className='about-us-blk-text'>Pet Grooming</div>
                     </div>
-                    <p className='about-us-blk-para'>Our pet grooming services at BharatYatra are designed to provide expert care and attention to your beloved pets. From luxurious baths to breed-specific grooming styles, we ensure that each grooming session is tailored to meet the unique needs of your furry companions. Our experienced groomers not only focus on enhancing your pet's appearance but also conduct thorough health checks during each session. This proactive approach helps in early detection of skin issues, parasites, or other health concerns, ensuring your pet stays healthy and happy.</p>
+                    <p className='about-us-blk-para'>Our pet grooming services at Purrfect are designed to provide expert care and attention to your beloved pets. From luxurious baths to breed-specific grooming styles, we ensure that each grooming session is tailored to meet the unique needs of your furry companions. Our experienced groomers not only focus on enhancing your pet's appearance but also conduct thorough health checks during each session. This proactive approach helps in early detection of skin issues, parasites, or other health concerns, ensuring your pet stays healthy and happy.</p>
                 </div>
                 <div className='about-us-product text-sky-950' onMouseOver={() => setActivityHover(true)} onMouseLeave={() => setActivityHover(false)}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem',padding:'0.5rem 0rem 0rem 1rem' }}>
@@ -47,7 +47,7 @@ const Services = () => {
                     <GiSittingDog className='about-us-icon' fontSize={27}/>
                         <div className='about-us-blk-text'>Pet Training</div>
                     </div>
-                    <p className='about-us-blk-para'>Pet playing at BharatYatra is more than just fun and games—it's about enriching your pet's life through engaging activities and social interaction. Our playtime sessions offer a variety of stimulating games and toys that cater to your pet's energy levels and preferences, both indoors and outdoors. Supervised play with other pets promotes socialization skills and enhances overall well-being in a safe and monitored environment. These interactive sessions not only keep your pets physically active but also provide valuable bonding opportunities between you and your furry friends. </p>
+                    <p className='about-us-blk-para'>Pet playing  is more than just fun and games—it's about enriching your pet's life through engaging activities and social interaction. Our playtime sessions offer a variety of stimulating games and toys that cater to your pet's energy levels and preferences, both indoors and outdoors. Supervised play with other pets promotes socialization skills and enhances overall well-being in a safe and monitored environment. These interactive sessions not only keep your pets physically active but also provide valuable bonding opportunities between you and your furry friends. </p>
                 </div>
             </div>
         </div>
