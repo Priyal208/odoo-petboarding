@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Login from "./Components/Register";
 import BoardPets from "./Pages/BoardPets";
-
+import Services from "./Pages/Services"
 import Navbar from "./Components/Navbar";
 import Register from "./Components/Register";
 import Success from "./Components/Success";
@@ -19,11 +19,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/boardpets" element={<BoardPets />} />
+          <Route path="/services" element={<Services/>}/>
+
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/paymentsuccess" element={<Success />} />
           <Route path="/paymentfailed" element={<Failed />} />
           <Route path="/aboutus" element={ <AboutUs /> } />
+
         </Routes>
       </div>
     </Router>
