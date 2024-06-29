@@ -9,6 +9,7 @@ import Register from "./Components/Register";
 import Success from "./Components/Success";
 import Failed from "./Components/Failed";
 import AboutUs from "./Pages/AboutUs";
+import FAQ from "./Pages/FAQs";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/paymentsuccess" element={<Success />} />
           <Route path="/paymentfailed" element={<Failed />} />
           <Route path="/aboutus" element={ <AboutUs /> } />
+          <Route path="/faqs" element={ <FAQ /> } />
         </Routes>
       </div>
     </Router>
