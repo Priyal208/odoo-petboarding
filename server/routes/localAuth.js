@@ -24,6 +24,8 @@ router.post(
           "string.pattern.base":
             "Password must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character.",
         }),
+        phoneNumber: Joi.string(),
+        fullName: Joi.string(),
     });
 
     const { error } = schema.validate(req.body);
@@ -34,7 +36,7 @@ router.post(
         message: error.details[0].message,
       });
 
-    const { email, password } = req.body;
+    const { email, password, fullName, phoneNumber } = req.body;
 
     const userRepeated = await User.findOne({ email });
     if (userRepeated)
@@ -49,6 +51,8 @@ router.post(
     const user = new User({
       email,
       password: await bcrypt.hash(password, salt),
+      fullName,
+      phoneNumber,
     });
     await user.save();
 
@@ -61,6 +65,7 @@ router.post(
         data: { id: user._id, email: user.email, isAdmin: user.isAdmin },
       });
       //redirect remaining
+      //res.redirect("http://localhost:3001/boardpets");
     });
   })
 );
@@ -97,5 +102,55 @@ router.post("/logout", loggedin, (req, res, next) => {
     });
   });
 });
+
+router.post("/resetPassword", loggedin, catchAsync(async (req, res, next) => {
+  const { currentPassword, newPassword, repeatPassword } = req.body;
+  const userId = req.user._id;
+
+  // Check if newPassword matches repeatPassword
+  if (newPassword !== repeatPassword) {
+    return res.status(400).json({
+      success: false,
+      status: 400,
+      message: "New password and repeat password do not match",
+      data: null,
+    });
+  }
+
+  // Verify current password
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      status: 404,
+      message: "User not found",
+      data: null,
+    });
+  }
+
+  const isMatch = await bcrypt.compare(currentPassword, user.password);
+  if (!isMatch) {
+    return res.status(400).json({
+      success: false,
+      status: 400,
+      message: "Current password is incorrect",
+      data: null,
+    });
+  }
+
+  // Generate salt and hash the new password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+  // Update user's password in the database
+  await User.findByIdAndUpdate(userId, { password: hashedPassword });
+
+  res.json({
+    success: true,
+    status: 200,
+    message: "Password reset successfully",
+    data: null,
+  });
+}));
 
 module.exports = router;
