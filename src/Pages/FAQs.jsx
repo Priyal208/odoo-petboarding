@@ -67,8 +67,13 @@ const styles = {
 
 const FAQ = () => {
   return (
-    <div style={{ maxWidth: "800px", margin: "auto", padding: "20px" }}>
+    <div className="bg-custom-gradient h-screen pt-14">
+      <div>
+<div style={{ maxWidth: "800px", margin: "auto" }}>
       <Faq data={data} styles={styles} />
+    </div>
+      </div>
+    
     </div>
   );
 };

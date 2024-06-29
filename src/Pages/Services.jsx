@@ -17,8 +17,8 @@ const Services = () => {
 
     return (
         <div id='about-us' className=' bg-custom-gradient font-VarelaRound'>
-            <h1 className='about-us-heading text-[6rem] text-white drop-shadow-xl font-extrabold font-VarelaRound ' style={{ textShadow: '2px 4px 6px black' }}>Services</h1>
-            <div className='about-us-block text-sky-950'>
+            
+            <div className='about-us-block text-sky-950 mt-10'>
                 <div className='about-us-community' onMouseOver={() => setExploreHover(true)} onMouseLeave={() => setExploreHover(false)}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem',padding:'0.5rem 0rem 0rem 1rem' }}>
                         <LuBath  className='about-us-icon' fontSize={27}/>

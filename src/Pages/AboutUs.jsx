@@ -5,7 +5,7 @@ import i1 from '../assets/imgs/cute-dog-3d-blue-background_959621-15.avif'
 const AboutUs = () => {
   return (
 <body>
-    <div class="outer">
+    <div class="outer bg-custom-gradient">
        <div class="head">About PurrFect
         <div class="about-block">
             <div class="abt1">
