@@ -10,7 +10,7 @@ import { IoPeople } from "react-icons/io5";
 import { ImStatsBars } from "react-icons/im";
 import { RiFeedbackFill } from "react-icons/ri";
 import { FaClipboard } from "react-icons/fa";
-
+import { LuDog } from "react-icons/lu";
 
 
 
@@ -70,8 +70,9 @@ const Navbar = () => {
               showLabel
               label = "Home"  
               />,
-             
+              <BottomNavigationAction key="services" value="/services" showLabel label="Services" component={Link} to="/services" icon={<LuDog  size={28} />} />,
               <BottomNavigationAction key="register" value="/register" showLabel label="Register" component={Link} to="/register" icon={<FaUserPlus size={28} />} />,
+              
               <BottomNavigationAction key="login" value="/login" showLabel label="Login" component={Link} to="/login" icon={<FaUser size={24} />} />,
             ]
           )}
@@ -82,5 +83,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
 
