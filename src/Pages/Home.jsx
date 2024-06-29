@@ -18,7 +18,7 @@ const Home = () => {
                             <PiPawPrintFill className="text-white text-[2.2rem] transform rotate-45 " />
                             <PiPawPrintFill className="text-white text-[2rem] transform -rotate-12 mt-4" />
                         </div>
-                        <h2 style={{ textShadow: '2px 4px 6px black' }} className=" text-[6rem] text-white drop-shadow-3xl font-extrabold font-VarelaRound tracking-wider`">Paws</h2>
+                        <h2 style={{ textShadow: '2px 4px 6px black' }} className=" text-[4rem] text-white drop-shadow-3xl font-extrabold font-VarelaRound tracking-wider`">Purrfect Stay Boarding</h2>
                         <div className="absolute bottom-0 left-[-2rem] flex flex-row items-start">
                             <PiPawPrintFill className="text-white text-[2.2rem] transform rotate-45 " />
                             <PiPawPrintFill className="text-white text-[2rem] transform -rotate-12 mt-4 " />
