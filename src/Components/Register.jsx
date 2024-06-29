@@ -6,6 +6,7 @@ import custBackgroundImage from "../assets/imgs/pngtree-blue-pastel-background-p
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import i1 from '../assets/imgs/white-dog-pastel-blue-background-3d_89917-269.jpg';
 import LoginTextLink from "../Components/LoginTextLink";
+import axios from "axios";
 
 function CustomBackground({ image }) {
   return (
@@ -20,7 +21,7 @@ function Register() {
   const location = useLocation();
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [userTypingPassword, setUserTypingPassword] = useState(false);
-  let isLogin = location.pathname !== "/register";
+  const isLogin = location.pathname !== "/register";
 
   const customButtonStyle = {
     borderRadius: "20px",
@@ -35,12 +36,12 @@ function Register() {
     margin: "auto",
   };
 
-  const [name, setname] = useState("");
-  const [phone_number, setPhone_number] = useState("");
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [state, setButtonState] = useState("idle");
+  const [state, setState] = useState("idle");
 
   const [isMinLength, setIsMinLength] = useState(false);
   const [hasUpperCase, setHasUpperCase] = useState(false);
@@ -60,6 +61,37 @@ function Register() {
     setHasSymbol(/[^A-Za-z0-9]/.test(value));
   };
 
+  const handleRegister = async () => {
+    setState('loading'); // Set button state to loading
+    try {
+      const response = await axios.post("http://localhost:3000/auth/api/v1/register", { email, password });
+  
+      if (response.status === 200) {
+        setState('success'); // Set button state to success if registration is successful
+      } else {
+        setState('error'); // Set button state to error if there's an issue with registration
+      }
+    } catch (error) {
+      console.error('Registration failed:', error);
+      setState('error'); // Set button state to error if there's an error caught in try-catch block
+    }
+  };
+
+  const handleLogin = async () => {
+    setState('loading'); // Set button state to loading
+    try {
+      const response = await axios.post("http://localhost:3000/auth/api/v1/login", { email, password });
+  
+      if (response.status === 200) {
+        setState('success'); // Set button state to success if login is successful
+      } else {
+        setState('error'); // Set button state to error if there's an issue with login
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      setState('error'); // Set button state to error if there's an error caught in try-catch block
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-8 px-4 lg:px-8">
@@ -77,7 +109,7 @@ function Register() {
                   value={name}
                   onChange={(e) => {
                     setError("");
-                    setname(e.target.value);
+                    setName(e.target.value);
                   }}
                   required
                 />
@@ -85,10 +117,10 @@ function Register() {
                   className="h-12 px-4 py-2 border-b-2 border-blue-800 text-lg bg-white shadow-md"
                   type="tel"
                   placeholder="Phone Number"
-                  value={phone_number}
+                  value={phoneNumber}
                   onChange={(e) => {
                     setError("");
-                    setPhone_number(e.target.value);
+                    setPhoneNumber(e.target.value);
                   }}
                   required
                 />
@@ -109,31 +141,31 @@ function Register() {
               required
             />
             <div className="relative w-full">
-  <InputField
-    className="w-full h-12 px-4 py-2 border-b-2 border-blue-800 text-lg bg-white shadow-md"
-    type={isPassVisible ? "text" : "password"}
-    placeholder="Password"
-    value={password}
-    onChange={(e) => {
-      setError("");
-      setPassword(e.target.value);
-      validate(e.target.value);
-      setUserTypingPassword(e.target.value.length > 0);
-    }}
-    required
-  />
-  {isPassVisible ? (
-    <FaEye
-      className="absolute right-4 top-3 text-blue-500 cursor-pointer"
-      onClick={() => setIsPassVisible(false)}
-    />
-  ) : (
-    <FaEyeSlash
-      className="absolute right-4 top-3 text-blue-500 cursor-pointer"
-      onClick={() => setIsPassVisible(true)}
-    />
-  )}
-</div>
+              <InputField
+                className="w-full h-12 px-4 py-2 border-b-2 border-blue-800 text-lg bg-white shadow-md"
+                type={isPassVisible ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => {
+                  setError("");
+                  setPassword(e.target.value);
+                  validate(e.target.value);
+                  setUserTypingPassword(e.target.value.length > 0);
+                }}
+                required
+              />
+              {isPassVisible ? (
+                <FaEye
+                  className="absolute right-4 top-3 text-blue-500 cursor-pointer"
+                  onClick={() => setIsPassVisible(false)}
+                />
+              ) : (
+                <FaEyeSlash
+                  className="absolute right-4 top-3 text-blue-500 cursor-pointer"
+                  onClick={() => setIsPassVisible(true)}
+                />
+              )}
+            </div>
 
             {userTypingPassword && (
               <div className="text-left w-full mt-2">
@@ -156,7 +188,7 @@ function Register() {
                     errorText="Error"
                     messageDuration={3000}
                     disabled={!(isMinLength && hasUpperCase && hasLowerCase && hasNumber && hasSymbol)}
-                    
+                    onClick={handleRegister}
                   />
                   {error && (
                     <p className="absolute top-[-20px] w-full text-center text-red-500 font-semibold">
@@ -184,7 +216,7 @@ function Register() {
                   loadingText="Wait..."
                   successText="Logged In"
                   errorText="Error"
-                 
+                  onClick={handleLogin} // Call handleLogin function on button click for login
                 />
                 {error && (
                   <p className="absolute top-[-20px] w-full text-center text-red-500 font-semibold">
@@ -196,13 +228,11 @@ function Register() {
           </form>
         </div>
         <div className="sm:w-full flex justify-center items-center p-4 lg:mt-0 mt-8">
-  <img className="block  sm:hidden rounded-xl w-2/3" src={i1} alt="Cute dog" />
-</div>
-
+          <img className="block  sm:hidden rounded-xl w-2/3" src={i1} alt="Cute dog" />
+        </div>
       </div>
     </div>
   );
-  
 }
 
 export default Register;
