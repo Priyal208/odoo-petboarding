@@ -65,16 +65,18 @@ function Register() {
     setState('loading'); // Set button state to loading
     try {
       const response = await axios.post("http://localhost:3000/auth/api/v1/register", { fullName, phoneNumber ,email, password });
-  console.log(response);
 
       if (response.status === 200) {
         setState('success'); 
-        
+        console.log(response);
       } else {
+        setError(response.message || "An error occurred during registration.");
         setState('error'); // Set button state to error if there's an issue with registration
       }
     } catch (error) {
       console.error('Registration failed:', error);
+      setError(error.response?.message || 'Registration failed. Please try again.');
+      console.log(error.response);
       setState('error'); // Set button state to error if there's an error caught in try-catch block
     }
   };
@@ -87,10 +89,12 @@ function Register() {
       if (response.status === 200) {
         setState('success'); // Set button state to success if login is successful
       } else {
+        setError(response.message || "An error occurred during login.");
         setState('error'); // Set button state to error if there's an issue with login
       }
     } catch (error) {
       console.error('Login failed:', error);
+      setError(error.response?.message || 'Login failed. Please try again.');
       setState('error'); // Set button state to error if there's an error caught in try-catch block
     }
   };
@@ -99,7 +103,7 @@ function Register() {
     <div className="flex flex-col items-center justify-center min-h-screen py-8 px-4 lg:px-8">
       <CustomBackground image={custBackgroundImage} />
       <div className="w-full max-w-6xl flex flex-row sm:flex-col items-center justify-center rounded-xl shadow-2xl p-6 lg:p-12">
-        <div className="w-full  flex justify-center items-center mb-8 lg:mb-0">
+        <div className="w-full flex justify-center items-center mb-8 lg:mb-0">
           <form className="flex flex-col gap-4 w-full max-w-md">
             {!isLogin && (
               <>
@@ -186,7 +190,7 @@ function Register() {
                     buttonState={state}
                     idleText="Register"
                     loadingText="Wait..."
-                    successText="Logged In"
+                    successText="Registered"
                     errorText="Error"
                     messageDuration={3000}
                     disabled={!(isMinLength && hasUpperCase && hasLowerCase && hasNumber && hasSymbol)}
@@ -230,7 +234,7 @@ function Register() {
           </form>
         </div>
         <div className="sm:w-full flex justify-center items-center p-4 lg:mt-0 mt-8">
-          <img className="block  sm:hidden rounded-xl w-2/3" src={i1} alt="Cute dog" />
+          <img className="block sm:hidden rounded-xl w-2/3" src={i1} alt="Cute dog" />
         </div>
       </div>
     </div>
