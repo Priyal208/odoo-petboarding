@@ -146,6 +146,113 @@ app.get("/paymentfailed", async (req, res) => {
   return res.redirect("http://localhost:3001/paymentfailed");
 });
 
+paypal.configure({
+  mode: "sandbox",
+  client_id:
+    "AWJU3GkmBn1GCuwwBglRJ5my3tJ2UYXCiPLy5NwIryaxVT8s-s92i3fWlgV28yvGzqtB9DCnJ_Ru5Evw",
+  client_secret:
+    "EDXBBw4qnR6qu24H-BPall2popd9_X1UpHY-Bw1bvUcZc1c1qUZUS3lU1howT6S2qXtgdCdFR1on3ldp",
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.post("/payment", async (req, res) => {
+  try {
+    let create_payment_json = {
+      intent: "sale",
+      payer: {
+        payment_method: "paypal",
+      },
+      redirect_urls: {
+        return_url: "http://localhost:3001/paymentsuccess",
+        cancel_url: "http://localhost:3001/paymentfailed",
+      },
+      transactions: [
+        {
+          item_list: {
+            items: [
+              {
+                name: "item",
+                sku: "item",
+                price: "1.00",
+                currency: "USD",
+                quantity: 1,
+              },
+            ],
+          },
+          amount: {
+            currency: "USD",
+            total: "1.00",
+          },
+          description: "This is the payment description.",
+        },
+      ],
+    };
+
+    await paypal.payment.create(create_payment_json, function (error, payment) {
+      if (error) {
+        console.log(error);
+        throw error;
+      } else {
+        console.log(payment);
+
+        let data = payment;
+        res.json(data);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/paymentsuccess", async (req, res) => {
+  try {
+    console.log(req.query);
+
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+
+    const express_checkout_json = {
+      payer_id: payerId,
+      transactions: [
+        {
+          amount: {
+            currency: "USD",
+            total: "1.00",
+          },
+          description: "This is the payment description.",
+        },
+      ],
+    };
+
+    paypal.payment.execute(
+      paymentId,
+      express_checkout_json,
+      function (error, payment) {
+        if (error) {
+          console.log(error);
+          return res.redirect("http://localhost:3001/paymentfailed");
+        } else {
+          const response = JSON.stringify(payment);
+          const ParsedResponse = JSON.parse(response);
+
+          console.log(ParsedResponse);
+
+          return res.redirect("http://localhost:3001/paymentsuccess");
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/paymentfailed", async (req, res) => {
+  return res.redirect("http://localhost:3001/paymentfailed");
+});
+
 app.use(error);
 
 mongoose

@@ -1,0 +1,250 @@
+@import url("https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&display=swap");
+:root {
+  --body: "Neue Haas Unica";
+  --head:"Baskervville";
+}
+body {
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  background-image: linear-gradient(to right, #031a3f, #0d3856, #031a3f);
+}
+.head {
+  color: white;
+  text-align: center;
+  font-size: 80px;
+  font-weight: 500;
+ font-family: var(--head);
+}
+.outer {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.abthead {
+  text-align: center;
+  font-size: 65px;
+  color: #edfcff;
+  margin: 25px;
+}
+
+.about-block {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr; 
+  grid-template-columns: 1fr 1fr;
+  padding: 0px 100px;
+
+  justify-content: center;
+  align-items: center;
+  min-height: 150vh;
+}
+.divide {
+  position: relative;
+}
+.about-block::before {
+  content: "";
+  position: absolute;
+  top: 120px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background-image: linear-gradient(to bottom, #edfcff27, #edfcff, #edfcff27);
+  height: calc(100% - 100px);
+}
+.tag1,
+.tag3 {
+  color: white;
+  font-size: 50px;
+  padding: 40px;
+  font-stretch: ultra-expanded;
+  font-family: var(--head);
+  font-weight: 450;
+}
+.tag2,
+.tag4 {
+  color: white;
+  font-size: 50px;
+  padding: 40px;
+  justify-self: end;
+  font-stretch: ultra-expanded;
+  font-family: var(--head);
+  font-weight: 450;
+}
+.abt1 {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+}
+.abt3 {
+  grid-column: 1;
+  grid-row: 3;
+  justify-self: start;
+}
+
+.abt2 {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  /* Place on the right */
+}
+.abt4 {
+  justify-self: end;
+  grid-column: 2;
+  grid-row: 4;
+}
+
+.abt1,
+.abt3,
+.abt2,
+.abt4 {
+    font-family: var(--body);
+  position: relative;
+  color: #edfcff;
+  font-size: 18px;
+  padding: 50px;
+  margin: 40px;
+  background-image: linear-gradient(to bottom, #0d3856, #031a3f, #031a3f);
+  border-radius: 5px;
+  width: 60%;
+  box-shadow: 2px 5px 10px rgba(2, 2, 2, 0.297);
+}
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.abt1::before,
+.abt1::after,
+.abt2::before,
+.abt2::after,
+.abt3::before,
+.abt3::after,
+.abt4::before,
+.abt4::after {
+  content: "";
+  position: absolute;
+  inset: -0.18rem;
+  z-index: -1;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    #1c5a87,
+    #8eddeb,
+    #8eddebfc,
+    #1c5a87
+  );
+  border-radius: inherit;
+  animation: moving 3s linear infinite;
+}
+
+@keyframes moving {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+.abt1::after,
+.abt2::after,
+.abt3::after,
+.abt4::after {
+  filter: blur(3px);
+}
+@media (max-width: 1300px) {
+  .abt1,
+  .abt3,
+  .abt2,
+  .abt4 {
+    font-size: 19px;
+    padding: 30px;
+    margin: 20px;
+    margin-top: 40px;
+    width: 70%;
+  }
+  .about-block {
+    padding: 0px 50px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .abt1,
+  .abt3,
+  .abt2,
+  .abt4 {
+    font-size: 18px;
+    padding: 30px;
+    margin: 10px;
+    margin-top: 40px;
+    width: 65%;
+  }
+  .about-block {
+    padding: 0px 35px;
+  }
+}
+
+@media (max-width: 700px) {
+  .about-block {
+    display: grid;
+    grid-template-rows: 100px 1fr 100px 1fr 100px 1fr 100px 1fr; 
+    grid-template-columns: 1fr;
+    padding: 0px 40px;
+    margin-top: 20px;
+  }
+  .abt1,
+  .abt3,
+  .abt2,
+  .abt4 {
+    grid-column: 1;
+    justify-self: center;
+
+    font-size: 18px;
+    padding: 30px;
+
+    margin-top: 20px;
+    width: 85%;
+  }
+  .tag1 {
+    grid-row: 1;
+  }
+  .abt1 {
+    grid-row: 2;
+  }
+  .tag2 {
+    grid-row: 3;
+  }
+  .abt2 {
+    grid-row: 4;
+  }
+  .tag3 {
+    grid-row: 5;
+  }
+  .abt3 {
+    grid-row: 6;
+  }
+  .tag4 {
+    grid-row: 7;
+  }
+  .abt4 {
+    grid-row: 8;
+  }
+  .tag1,
+  .tag3,
+  .tag2,
+  .tag4 {
+    color: white;
+    font-size: 37px;
+    padding: 40px;
+    justify-self: center;
+    font-stretch: ultra-expanded;
+    font-family: "Oswald", sans-serif;
+    font-weight: 450;
+  }
+  .head {
+    font-size: 60px;
+  }
+}

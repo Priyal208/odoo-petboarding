@@ -23,6 +23,7 @@ code {
 	margin: 0;
 	overflow-x: hidden;
   padding-bottom: 6.125rem;
+  overflow-y: auto;
   }
   
   .main-outer {
@@ -246,5 +247,204 @@ code {
     pointer-events: none;
   }
   
+  #about-us {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding-bottom: 4rem;
+    
+}
 
+.about-us-heading {
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-top: 5rem;
+    font-size: 4rem;
+}
+
+.about-us-block {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.about-us-community, .about-us-product, .about-us-event, .about-us-location {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 35%;
+    min-height: 15rem;
+    border: 2px solid rgba(206, 212, 218, 0);
+    border-radius: 8px;
+    margin-bottom: 21px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.47);
+    background-color: rgba(248, 246, 244, 0.063);
+    backdrop-filter: blur(5px);
+}
+@property --gradient-angle{
+    syntax :"<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+.about-us-community::before,
+.about-us-community::after,
+.about-us-product::before,
+.about-us-product::after,
+.about-us-event::before,
+.about-us-event::after,
+.about-us-location::before,
+.about-us-location::after{
+    content: "";
+  position: absolute;
+  inset: -0.1rem;
+  z-index: 2;
+  background: conic-gradient(from var(--gradient-angle), rgba(7, 28, 106, 0.792), rgba(20, 3, 96, 0.792), rgba(109, 167, 238, 0.792),rgba(5, 25, 97, 0.792));
+  border-radius: inherit;
+  animation: moving 3s linear infinite;
+
+  mask: linear-gradient(
+      to right,
+      black 0.7%,
+      transparent 0%,
+      transparent 99.3%,
+      black 90%
+    ),
+    linear-gradient(
+      to bottom,
+      black 0.8%,
+      transparent 0%,
+      transparent 99.1%,
+      black 90%
+    );
+}
+
+.about-us-product::before,
+.about-us-product::after{
+    background: conic-gradient(from var(--gradient-angle), rgba(7, 28, 106, 0.792), rgba(20, 3, 96, 0.792), rgba(109, 167, 238, 0.792),rgba(5, 25, 97, 0.792));
+}
+
+.about-us-event::before,
+.about-us-event::after{
+	background: conic-gradient(from var(--gradient-angle), rgba(7, 28, 106, 0.792), rgba(20, 3, 96, 0.792), rgba(109, 167, 238, 0.792),rgba(5, 25, 97, 0.792));
+}
+
+.about-us-location::before,
+.about-us-location::after{
+    background: conic-gradient(from var(--gradient-angle), rgba(7, 28, 106, 0.792), rgba(20, 3, 96, 0.792), rgba(109, 167, 238, 0.792),rgba(5, 25, 97, 0.792));
+}
+@keyframes moving {
+    0% {
+        --gradient-angle:0deg;
+    }
+    100% {
+        --gradient-angle:360deg;
+    }
+}
+.about-us-community::after{
+    filter: blur(8px);
+}
+.about-us-product::after{
+    filter: blur(8px);
+}
+.about-us-event::after{
+    filter: blur(8px);
+}
+.about-us-location::after{
+    filter: blur(8px);
+}
+
+
+.about-us-community:hover {
   
+    background:linear-gradient(to bottom,rgb(13, 6, 47),rgb(22, 62, 153));
+    transition: all 1s ease-out;
+    color: white;
+}
+
+
+.about-us-location:hover {
+    background:linear-gradient(to bottom,rgb(13, 6, 47),rgb(22, 62, 153));
+    transition: all 1s ease-out;
+    color: white;
+}
+
+
+.about-us-product:hover {
+    background:linear-gradient(to bottom,rgb(13, 6, 47),rgb(22, 62, 153));
+    transition: all 1s ease-out;
+    color: white;
+}
+
+
+
+.about-us-event:hover { background:linear-gradient(to bottom,rgb(13, 6, 47),rgb(22, 62, 153));
+    transition: all 1s ease-out;
+    color: white;
+}
+
+.about-us-blk-text {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 1rem;
+}
+
+.about-us-blk-para {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .about-us-block {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .about-us-community, .about-us-event, .about-us-location, .about-us-product {
+        width: 90%;
+        height: 100%;
+        padding: 0.5rem;
+    }
+}
+
+@media only screen and (max-width: 1020px) {
+    .about-us-block {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .about-us-community, .about-us-event, .about-us-location, .about-us-product {
+        width: 90% !important;
+        height: 100%;
+        padding: 1rem;
+    }
+}
+
+@media only screen and (max-width: 1250px) {
+    .about-us-community, .about-us-event, .about-us-location, .about-us-product {
+        width: 45%;
+        height: 100%;
+        padding-bottom: 20px;
+    }
+}
+
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;600&display=swap');
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
