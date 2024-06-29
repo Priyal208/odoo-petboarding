@@ -24,6 +24,8 @@ router.post(
           "string.pattern.base":
             "Password must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character.",
         }),
+        phoneNumber: Joi.string(),
+        fullName: Joi.string(),
     });
 
     const { error } = schema.validate(req.body);
@@ -34,7 +36,7 @@ router.post(
         message: error.details[0].message,
       });
 
-    const { email, password } = req.body;
+    const { email, password, fullName, phoneNumber } = req.body;
 
     const userRepeated = await User.findOne({ email });
     if (userRepeated)
@@ -49,6 +51,8 @@ router.post(
     const user = new User({
       email,
       password: await bcrypt.hash(password, salt),
+      fullName,
+      phoneNumber,
     });
     await user.save();
 
@@ -61,6 +65,7 @@ router.post(
         data: { id: user._id, email: user.email, isAdmin: user.isAdmin },
       });
       //redirect remaining
+      //res.redirect("http://localhost:3001/boardpets");
     });
   })
 );
