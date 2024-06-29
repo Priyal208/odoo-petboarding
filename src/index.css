@@ -158,6 +158,9 @@ code {
 	border-radius: 2px;
 	cursor: pointer;
   }
+  .submit-button:disabled {
+	cursor: not-allowed;
+  }
   
   .star-rating {
 	display: flex;

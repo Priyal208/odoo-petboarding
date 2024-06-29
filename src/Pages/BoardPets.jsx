@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../index.css";
 import DatePicker, { CalendarContainer } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,15 +9,28 @@ const BoardPets = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [hoveredEndDate, setHoveredEndDate] = useState(null);
+  const [petName, setPetName] = useState("");
+  const [ownerName, setOwnerName] = useState("");
+  const [additionalRequirements, setAdditionalRequirements] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const [bookedDates] = useState([
     new Date("2024-07-10"),
     new Date("2024-07-15"),
     new Date("2024-07-20"),
   ]);
 
-  const HandleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const isFormValid =
+      petName.trim() !== "" &&
+      ownerName.trim() !== "" &&
+      startDate !== null &&
+      endDate !== null;
+    setIsFormValid(isFormValid);
+  }, [petName, ownerName, startDate, endDate]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     let res = await axios.post("http://localhost:3000/payment");
 
     console.log(res);
@@ -106,7 +119,7 @@ const BoardPets = () => {
             Board your pet at <b>Purrfect Stay Boarding</b>
           </h1>
         </header>
-        <form id="survey-form">
+        <form id="survey-form" onSubmit={handleSubmit}>
           <fieldset>
             <label id="name_and_surname-label" htmlFor="name_and_surname">
               Pet name:
@@ -117,6 +130,8 @@ const BoardPets = () => {
               placeholder="Your answer"
               required
               className="form-control"
+              value={petName}
+              onChange={(e) => setPetName(e.target.value)}
             />
           </fieldset>
           <fieldset>
@@ -129,6 +144,8 @@ const BoardPets = () => {
               placeholder="Your answer"
               required
               className="form-control"
+              value={ownerName}
+              onChange={(e) => setOwnerName(e.target.value)}
             />
           </fieldset>
           <fieldset className="dateSelector">
@@ -191,6 +208,8 @@ const BoardPets = () => {
               name="comments"
               placeholder="Your answer"
               className="input-textarea"
+              value={additionalRequirements}
+              onChange={(e) => setAdditionalRequirements(e.target.value)}
             ></textarea>
           </fieldset>
           <fieldset>
@@ -198,7 +217,7 @@ const BoardPets = () => {
               type="submit"
               id="submit"
               className="submit-button"
-              onClick={HandleSubmit}
+              disabled={!isFormValid}
             >
               Submit
             </button>
