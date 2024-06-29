@@ -11,7 +11,8 @@ import { ImStatsBars } from "react-icons/im";
 import { RiFeedbackFill } from "react-icons/ri";
 import { FaClipboard } from "react-icons/fa";
 import { LuDog } from "react-icons/lu";
-
+import { FaQuestion } from "react-icons/fa";
+import { IoSearchSharp } from "react-icons/io5";
 
 
 const Navbar = () => {
@@ -74,6 +75,8 @@ const Navbar = () => {
               <BottomNavigationAction key="register" value="/register" showLabel label="Register" component={Link} to="/register" icon={<FaUserPlus size={28} />} />,
               
               <BottomNavigationAction key="login" value="/login" showLabel label="Login" component={Link} to="/login" icon={<FaUser size={24} />} />,
+              <BottomNavigationAction key="faq" value="/faqs" showLabel label="FAQs" component={Link} to="/faqs" icon={<FaQuestion size={24} />} />,
+              <BottomNavigationAction key="aboutus" value="/aboutus" showLabel label="About Us" component={Link} to="/aboutus" icon={<IoSearchSharp size={24} />} />,
             ]
           )}
       </BottomNavigation>
