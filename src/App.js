@@ -8,6 +8,7 @@ import Navbar from "./Components/Navbar";
 import Register from "./Components/Register";
 import Success from "./Components/Success";
 import Failed from "./Components/Failed";
+import Profile from "./Components/Profile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/paymentsuccess" element={<Success />} />
           <Route path="/paymentfailed" element={<Failed />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>

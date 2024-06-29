@@ -1,86 +1,91 @@
-
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { FaUser, FaUserPlus} from 'react-icons/fa';
-import { PiHandCoinsBold } from "react-icons/pi";
-import { MdCampaign, MdHome, MdContentPasteSearch } from "react-icons/md";
-import { IoPeople } from "react-icons/io5";
-import { ImStatsBars } from "react-icons/im";
-import { RiFeedbackFill } from "react-icons/ri";
-import { FaClipboard } from "react-icons/fa";
-
-
-
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { FaUser, FaUserPlus } from "react-icons/fa";
+import { MdHome } from "react-icons/md";
 
 const Navbar = () => {
-  const csrftoken = localStorage.getItem('csrftoken');
-  const userType = localStorage.getItem('userType');
-  const [value, setValue] = useState(0);
+  const csrftoken = localStorage.getItem("csrftoken");
+  const userType = localStorage.getItem("userType");
+  const [value, setValue] = useState("/");
   const location = useLocation();
-  //eslint-disable-next-line
-  const [isScrollable, setIsScrollable] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    console.log(csrftoken);
     setValue(location.pathname);
-    setIsScrollable(window.innerHeight < document.body.offsetHeight);
-  }, [location.pathname]);
+    setIsLoggedIn(!!csrftoken);
+  }, [location.pathname, csrftoken]);
 
   return (
-    <div className='fixed bottom-0 left-0 w-full z-50'>
-    <nav className='nav'>
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        style={{
-          
-          width: '100%',
-          margin: '0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-evenly',
-          borderTopLeftRadius: '16px',
-          borderTopRightRadius: '16px',
-          backgroundColor: '#b8ddfa',
-        }}
-      >
-        {csrftoken && userType === "user" ? (
-          [
-            <BottomNavigationAction 
-            key="home" value="/" component={Link} 
-            to="/" icon={<MdHome size={30}/>} 
-            />,
-            
-            <BottomNavigationAction key="profile" value="/user" component={Link} to="/user" icon={<FaUser size={24} />} />,
-           
-          ]
-        ) : csrftoken && userType === "ngo" ? (
-          [
-            
-          ]
-        )
-          : (
-            [
-              <BottomNavigationAction 
-              key="home" value="/" component={Link} 
-              to="/" icon={<MdHome size={30}/>} 
-              showLabel
-              label = "Home"  
-              />,
-             
-              <BottomNavigationAction key="register" value="/register" showLabel label="Register" component={Link} to="/register" icon={<FaUserPlus size={28} />} />,
-              <BottomNavigationAction key="login" value="/login" showLabel label="Login" component={Link} to="/login" icon={<FaUser size={24} />} />,
-            ]
+    <div className="fixed bottom-0 left-0 w-full z-50">
+      <nav className="nav">
+        <BottomNavigation
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          style={{
+            width: "100%",
+            margin: "0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            borderTopLeftRadius: "16px",
+            borderTopRightRadius: "16px",
+            backgroundColor: "#b8ddfa",
+          }}
+        >
+          {isLoggedIn && userType === "user" ? (
+            <>
+              <BottomNavigationAction
+                value="/"
+                component={Link}
+                to="/"
+                icon={<MdHome size={30} />}
+              />
+              <BottomNavigationAction
+                value="/user"
+                component={Link}
+                to="/user"
+                icon={<FaUser size={24} />}
+              />
+            </>
+          ) : isLoggedIn && userType === "ngo" ? (
+            <>{/* TODO: Adjust actions for NGO user */}</>
+          ) : (
+            <>
+              <BottomNavigationAction
+                value="/"
+                component={Link}
+                to="/"
+                showLabel
+                label="Home"
+                icon={<MdHome size={30} />}
+              />
+              <BottomNavigationAction
+                value="/register"
+                showLabel
+                label="Register"
+                component={Link}
+                to="/register"
+                icon={<FaUserPlus size={28} />}
+              />
+              <BottomNavigationAction
+                value="/login"
+                showLabel
+                label="Login"
+                component={Link}
+                to="/login"
+                icon={<FaUser size={24} />}
+              />
+            </>
           )}
-      </BottomNavigation>
-    </nav>
+        </BottomNavigation>
+      </nav>
     </div>
   );
 };
 
 export default Navbar;
-
-
