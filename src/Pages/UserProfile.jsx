@@ -2,62 +2,42 @@ import React, { useState, useEffect } from "react";
 import styles from "../assets/cssfiles/module/profile.module.css";
 import img from "../assets/imgs/paws.webp";
 import { MdAddPhotoAlternate } from "react-icons/md";
-import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const UserProfile = () => {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [username, setUsername] = useState("Shubh21");
-  const [email, setEmail] = useState("shubhdoshi21@gmail.com");
+  const { user, isAuthenticated, logout, getAccessTokenSilently } = useAuth0();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/auth/api/v1/userProfile");
-        if (response.data.success) {
-          setUsername(response.data.user.username);
-          setEmail(response.data.user.email);
-        } else {
-          console.error("Failed to fetch user profile");
-        }
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
+    if (isAuthenticated) {
+      setUsername(user.nickname || user.name);
+      setEmail(user.email);
+    }
+  }, [isAuthenticated, user]);
+
+  const handlePasswordChange = async () => {
+    const domain = "dev-z53na0k6znkt7cwx.us.auth0.com";
+    const clientId = "eN8bndYfmSwIjxrfwITsmqi7uZe5UqfN";
+    const connection = "Username-Password-Authentication"; // Replace with your connection name if different
+
+    const url = `https://${domain}/dbconnections/change_password`;
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        client_id: clientId,
+        email: email,
+        connection: connection,
+      }),
     };
 
-    fetchUserProfile();
-  }, []);
-
-  const handleChangePassword = async (e) => {
-    e.preventDefault();
-    if (newPassword !== confirmPassword) {
-      setPasswordError("New password and confirm password do not match.");
-      return;
-    }
-    setPasswordError("");
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/api/v1/resetPassword",
-        {
-          currentPassword,
-          newPassword,
-        }
-      );
-
-      if (response.data.success) {
-        alert("Password changed successfully.");
-        setCurrentPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
-      } else {
-        setPasswordError(response.data.message);
-      }
-    } catch (error) {
-      setPasswordError("An error occurred. Please try again.");
-      console.error("Error changing password:", error);
+    const response = await fetch(url, requestOptions);
+    if (response.ok) {
+      alert("Password reset email sent!");
+    } else {
+      alert("Failed to send password reset email.");
     }
   };
 
@@ -80,12 +60,12 @@ const UserProfile = () => {
           </div>
           <div className={styles.formContainer}>
             <div className={`${styles.passwordUser}`}>
-              {/* <div className={styles.inputField}>
-                <input type="text" required value={username} readOnly />
-                <label>UserName</label>
-              </div> */}
               <div className={styles.inputField}>
-                <input type="text" required value={email} readOnly />
+                <input type="text" value={username} />
+                <label>UserName</label>
+              </div>
+              <div className={styles.inputField}>
+                <input type="text" value={email} />
                 <label>EmailId</label>
               </div>
             </div>
@@ -105,50 +85,23 @@ const UserProfile = () => {
                 Change Password
               </label>
               <div className={styles.tabContent}>
-                <form onSubmit={handleChangePassword}>
-                  <div className={`${styles.password}`}>
-                    <div className={styles.inputField}>
-                      <input
-                        type="password"
-                        required
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                      />
-                      <label>Current Password</label>
-                    </div>
-                    <div className={styles.inputField}>
-                      <input
-                        type="password"
-                        required
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                      />
-                      <label>New Password</label>
-                    </div>
-                    <div className={styles.inputField}>
-                      <input
-                        type="password"
-                        required
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                      />
-                      <label>Confirm Password</label>
-                    </div>
-                  </div>
-                  {passwordError && (
-                    <div className={styles.error}>{passwordError}</div>
-                  )}
-                  <div className={styles.btnContainer}>
-                    <button className={styles.button} type="submit">
-                      Save
-                    </button>
-                  </div>
-                </form>
+                <p>To change your password, click the button below.</p>
+                <button
+                  className={styles.button}
+                  onClick={handlePasswordChange}
+                >
+                  Change Password
+                </button>
               </div>
             </div>
           </div>
           <div className={styles.btnContainer}>
-            <button className={styles.button}>Logout</button>
+            <button
+              className={styles.button}
+              onClick={() => logout({ returnTo: window.location.origin })}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>
