@@ -1,26 +1,17 @@
-
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { FaUser, FaUserPlus} from 'react-icons/fa';
-import { PiHandCoinsBold } from "react-icons/pi";
-import { MdCampaign, MdHome, MdContentPasteSearch } from "react-icons/md";
-import { IoPeople } from "react-icons/io5";
-import { ImStatsBars } from "react-icons/im";
-import { RiFeedbackFill } from "react-icons/ri";
-import { FaClipboard } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { FaUser, FaQuestion } from "react-icons/fa";
+import { MdHome } from "react-icons/md";
 import { LuDog } from "react-icons/lu";
-import { FaQuestion } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
-  const csrftoken = localStorage.getItem('csrftoken');
-  const userType = localStorage.getItem('userType');
-  const [value, setValue] = useState(0);
+  const { loginWithRedirect, isAuthenticated, logout, user } = useAuth0();
+  const [value, setValue] = useState("/");
   const location = useLocation();
-  //eslint-disable-next-line
   const [isScrollable, setIsScrollable] = useState(false);
 
   useEffect(() => {
@@ -29,61 +20,92 @@ const Navbar = () => {
   }, [location.pathname]);
 
   return (
-    <div className='fixed bottom-0 left-0 w-full z-50'>
-    <nav className='nav'>
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        style={{
-          
-          width: '100%',
-          margin: '0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-evenly',
-          borderTopLeftRadius: '16px',
-          borderTopRightRadius: '16px',
-          backgroundColor: '#b8ddfa',
-        }}
-      >
-        {csrftoken && userType === "user" ? (
-          [
-            <BottomNavigationAction 
-            key="home" value="/" component={Link} 
-            to="/" icon={<MdHome size={30}/>} 
-            />,
-            
-            <BottomNavigationAction key="profile" value="/user" component={Link} to="/user" icon={<FaUser size={24} />} />,
-           
-          ]
-        ) : csrftoken && userType === "ngo" ? (
-          [
-            
-          ]
-        )
-          : (
-            [
-              <BottomNavigationAction 
-              key="home" value="/" component={Link} 
-              to="/" icon={<MdHome size={30}/>} 
-              showLabel
-              label = "Home"  
-              />,
-              <BottomNavigationAction key="services" value="/services" showLabel label="Services" component={Link} to="/services" icon={<LuDog  size={28} />} />,
-              <BottomNavigationAction key="register" value="/register" showLabel label="Register" component={Link} to="/register" icon={<FaUserPlus size={28} />} />,
-              
-              <BottomNavigationAction key="login" value="/login" showLabel label="Login" component={Link} to="/login" icon={<FaUser size={24} />} />,
-              <BottomNavigationAction key="faq" value="/faqs" showLabel label="FAQs" component={Link} to="/faqs" icon={<FaQuestion size={24} />} />,
-              <BottomNavigationAction key="aboutus" value="/aboutus" showLabel label="About Us" component={Link} to="/aboutus" icon={<IoSearchSharp size={24} />} />,
-            ]
+    <div className="fixed bottom-0 left-0 w-full z-50">
+      <nav className="nav">
+        <BottomNavigation
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          style={{
+            width: "100%",
+            margin: "0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            borderTopLeftRadius: "16px",
+            borderTopRightRadius: "16px",
+            backgroundColor: "#b8ddfa",
+          }}
+        >
+          <BottomNavigationAction
+            key="home"
+            value="/"
+            component={Link}
+            to="/"
+            icon={<MdHome size={30} />}
+            showLabel
+            label="Home"
+          />
+          <BottomNavigationAction
+            key="services"
+            value="/services"
+            component={Link}
+            to="/services"
+            icon={<LuDog size={28} />}
+            showLabel
+            label="Services"
+          />
+
+          <BottomNavigationAction
+            key="faqs"
+            value="/faqs"
+            component={Link}
+            to="/faqs"
+            icon={<FaQuestion size={24} />}
+            showLabel
+            label="FAQs"
+          />
+          <BottomNavigationAction
+            key="aboutus"
+            value="/aboutus"
+            component={Link}
+            to="/aboutus"
+            icon={<IoSearchSharp size={24} />}
+            showLabel
+            label="About Us"
+          />
+          {!isAuthenticated && (
+            <>
+              <BottomNavigationAction
+                key="login"
+                value="/"
+                component={Link}
+                to="/"
+                onClick={() => loginWithRedirect()}
+                icon={<FaUser size={24} />}
+                showLabel
+                label="Login"
+              />
+            </>
           )}
-      </BottomNavigation>
-    </nav>
+          {isAuthenticated && (
+            <>
+              <BottomNavigationAction
+                key="profile"
+                value="/user"
+                component={Link}
+                to="/user"
+                icon={<FaUser size={24} />}
+                showLabel
+                label="Profile"
+              />
+            </>
+          )}
+        </BottomNavigation>
+      </nav>
     </div>
   );
 };
 
 export default Navbar;
-
